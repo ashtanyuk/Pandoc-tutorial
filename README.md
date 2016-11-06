@@ -64,7 +64,7 @@
 
 Выглядит это так:
 
-```c++
+```cpp
 #include <stdio.h>
 int main()
 {
