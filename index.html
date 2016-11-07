@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Pandoc-tutorial by ashtanyuk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Pandoc-tutorial</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/ashtanyuk/Pandoc-tutorial" class="btn">View on GitHub</a>
+      <a href="https://github.com/ashtanyuk/Pandoc-tutorial/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/ashtanyuk/Pandoc-tutorial/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="Конвертор-текстовых-форматов-pandoc" class="anchor" href="#%D0%9A%D0%BE%D0%BD%D0%B2%D0%B5%D1%80%D1%82%D0%BE%D1%80-%D1%82%D0%B5%D0%BA%D1%81%D1%82%D0%BE%D0%B2%D1%8B%D1%85-%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%BE%D0%B2-pandoc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Конвертор текстовых форматов Pandoc</h1>
+
+<p>Версия документа: 0.04</p>
+
+<h2>
+<a id="Небольшое-введение" class="anchor" href="#%D0%9D%D0%B5%D0%B1%D0%BE%D0%BB%D1%8C%D1%88%D0%BE%D0%B5-%D0%B2%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Небольшое введение</h2>
+
+<p>Что такое <a href="http://pandoc.org">Pandoc</a>? Эта программа, которой нам так не хватало в давние времена. Она умеет конвертировать документы множества форматов друг в друга, облегчая разработку и публикацию статей, справок, веб-документов, книг и многое другое. Написана эта чудесная программа на функциональном языке программирования <strong>Haskell</strong> и распростаняется под лицензией <a href="http://www.gnu.org/copyleft/gpl.html">GPL</a>, то есть бесплатно. Ее автор - <a href="http://johnmacfarlane.net">John MacFarlane</a>.</p>
+
+<p>Наиболее удобно использовать Pandoc для преобразования исходного текста, написанного с использованием разметки <strong>Markdown</strong> в различные "публичные" форматы типа <em>html</em>, <em>tex</em> или даже <em>docx</em> и <em>pdf</em>. Дело в том, что разметка <em>Markdown</em> предоставляет очень простой язык разметки документов, который можно изучить за несколько минут и в дальнейшем использовать повсеместно. </p>
+
+<h2>
+<a id="Преобразование-документов-markdown-в-различные-форматы" class="anchor" href="#%D0%9F%D1%80%D0%B5%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%BE%D0%B2-markdown-%D0%B2-%D1%80%D0%B0%D0%B7%D0%BB%D0%B8%D1%87%D0%BD%D1%8B%D0%B5-%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D1%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Преобразование документов <em>Markdown</em> в различные форматы</h2>
+
+<h3>
+<a id="Преобразование-в-docx" class="anchor" href="#%D0%9F%D1%80%D0%B5%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B2-docx" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Преобразование в DOCX</h3>
+
+<p>Самый простой способ сделать это:</p>
+
+<pre><code>pandoc -o file.docx -f markdown -t docx file.md
+</code></pre>
+
+<p>По-умолчанию, используется стандартый шаблон Word-файла. При желании, можно взять сгенерированный файл, поправить его и использовать в качестве шаблона:</p>
+
+<pre><code>pandoc -o file.docx -f markdown -t docx file.md --reference-docx=template.docx
+</code></pre>
+
+<h3>
+<a id="Преобразование-в-pdf" class="anchor" href="#%D0%9F%D1%80%D0%B5%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B2-pdf" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Преобразование в PDF</h3>
+
+<p>Преобразование происходит через TeX-формат с последующей компиляцией в PDF. Опция <em>--latex-engine</em> задает программу для компиляции.</p>
+
+<p>Варианты:</p>
+
+<ul>
+<li>pdflatex</li>
+<li>xelatex</li>
+<li>luatex</li>
+</ul>
+
+<p>Выбор xelatex позволяет использовать True Type шрифты</p>
+
+<pre><code>pandoc -o file.pdf -f markdown  --latex-engine=xelatex  file.md 
+</code></pre>
+
+<p>Для поддержки русского языка можно использовать опцию  <em>lang=russian</em>:</p>
+
+<pre><code>pandoc -o file.pdf -f markdown  --latex-engine=pdflatex -V lang=russian file.md    
+</code></pre>
+
+<p>Опция -V позволяет устанавливать многие параметры TeX-файла, например указать шрифт и базовый размер:</p>
+
+<pre><code>pandoc -o file.pdf -f markdown  --latex-engine=xelatex -V mainfont="Ubuntu" -V fontsize=12pt file.md
+</code></pre>
+
+<p>А так можно еще и задать поля документа:</p>
+
+<pre><code>pandoc -o file.pdf -f markdown  --latex-engine=xelatex -V mainfont="Ubuntu" -V fontsize=12pt file.md -V geometry:margin=2cm    
+</code></pre>
+
+<p>Но наиболее гибкий способ заключается в использовании шаблонов. С помощью команды</p>
+
+<pre><code>pandoc -D latex &gt; t.tex 
+</code></pre>
+
+<p>мы копируем стандартные настройки TeX-шаблона в файл <em>t.tex</em>, который можно поправить руками, а затем указать при конвертации в PDF:</p>
+
+<pre><code>pandoc -o test2.pdf -f markdown  --latex-engine=xelatex -V mainfont="Arial" -V fontsize=12pt test2.md -V geometry:margin=2cm --template=t.tex
+</code></pre>
+
+<p>В частности, в шаблоне можно изменить масштабирование шрифтов, формат документа и многое другое.</p>
+
+<p>Другой пример с использованием параметров управления форматом бумаги:</p>
+
+<pre><code>pandoc -V geometry:paperwidth=4in -V geometry:paperheight=6in -V geometry:margin=.5in -o file.pdf file.md
+</code></pre>
+
+<p>Здесь задается ширина листа, высота и значение полей.</p>
+
+<h3>
+<a id="Управление-шрифтами" class="anchor" href="#%D0%A3%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D1%88%D1%80%D0%B8%D1%84%D1%82%D0%B0%D0%BC%D0%B8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Управление шрифтами</h3>
+
+<p>В качестве значения опции <em>-V</em> можно указать несколько значений для шрифтов:</p>
+
+<ul>
+<li>mainfont</li>
+<li>sansfont</li>
+<li>monofont</li>
+</ul>
+
+<p>Каждый из этих типов шрифтов используется в документе для различных целей (например, для оформления листингов программ или выделения различных фрагментов текста).</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/ashtanyuk/Pandoc-tutorial">Pandoc-tutorial</a> is maintained by <a href="https://github.com/ashtanyuk">ashtanyuk</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
